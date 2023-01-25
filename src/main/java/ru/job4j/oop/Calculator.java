@@ -15,12 +15,12 @@ public class Calculator {
         return b - x;
     }
 
-    public int divide(int c) {
-        return c / x;
+    public double divide(int c) {
+        return (double) c / x;
     }
 
     public double sumOfAll(int d) {
-        return minus(d) + divide(d) + sum(d) + multiply(d);
+        return (double) minus(d) + divide(d) + sum(d) + multiply(d);
     }
 
     public static void main(String[] args) {
@@ -28,7 +28,7 @@ public class Calculator {
 
         int result = sum(10);
         int resultMulti = multiply(7);
-        double resultDiv = calculator.divide(75);
+        double resultDiv = calculator.divide(4);
         int resultMin = minus(8);
         double resultOfAll = calculator.sumOfAll(6);
 
