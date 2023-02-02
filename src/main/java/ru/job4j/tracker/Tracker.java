@@ -31,16 +31,16 @@ public class Tracker {
     }
 
     public Item[] findAll() {
-        Item[] rsl = new Item[items.length];
-        int size = 0;
-        for (int index = 0; index < items.length; index++) {
+        Item[] rsl = new Item[size];
+        int sizeNew = 0;
+        for (int index = 0; index < size; index++) {
             Item name = items[index];
             if (name != null) {
-                rsl[size] = name;
-                size++;
+                rsl[sizeNew] = name;
+                sizeNew++;
             }
         }
-        return Arrays.copyOf(rsl, size);
+        return Arrays.copyOf(rsl, sizeNew);
     }
 
     public Item[] findByName(String key) {
