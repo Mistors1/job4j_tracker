@@ -2,11 +2,13 @@ package ru.job4j.tracker;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TrackerTest {
+class TrackerTest {
     @Test
-    public void whenAddNewItemThenTrackerHasSameItem() {
+    void whenAddNewItemThenTrackerHasSameItem() {
         Tracker tracker = new Tracker();
         Item item = new Item();
         item.setName("test1");
@@ -16,7 +18,7 @@ public class TrackerTest {
     }
 
     @Test
-    public void whenTestFindById() {
+    void whenTestFindById() {
         Tracker tracker = new Tracker();
         Item bug = new Item("Bug");
         Item item = tracker.add(bug);
@@ -25,18 +27,18 @@ public class TrackerTest {
     }
 
     @Test
-    public void whenTestFindAll() {
+    void whenTestFindAll() {
         Tracker tracker = new Tracker();
         Item first = new Item("First");
         Item second = new Item("Second");
         tracker.add(first);
         tracker.add(second);
-        Item result = tracker.findAll()[0];
+        Item result = tracker.findAll().get(0);
         assertThat(result.getName()).isEqualTo(first.getName());
     }
 
     @Test
-    public void whenTestFindByNameCheckArrayLength() {
+    void whenTestFindByNameCheckArrayLength() {
         Tracker tracker = new Tracker();
         Item first = new Item("First");
         Item second = new Item("Second");
@@ -45,12 +47,13 @@ public class TrackerTest {
         tracker.add(new Item("First"));
         tracker.add(new Item("Second"));
         tracker.add(new Item("First"));
-        Item[] result = tracker.findByName(first.getName());
-        assertThat(result.length).isEqualTo(3);
+        //Item[] result = tracker.findByName(first.getName());
+        List<Item> result = tracker.findByName(first.getName());
+        assertThat(result).hasSize(3);
     }
 
     @Test
-    public void whenTestFindByNameCheckSecondItemName() {
+    void whenTestFindByNameCheckSecondItemName() {
         Tracker tracker = new Tracker();
         Item first = new Item("First");
         Item second = new Item("Second");
@@ -59,12 +62,13 @@ public class TrackerTest {
         tracker.add(new Item("First"));
         tracker.add(new Item("Second"));
         tracker.add(new Item("First"));
-        Item[] result = tracker.findByName(second.getName());
-        assertThat(result[1].getName()).isEqualTo(second.getName());
+        //Item[] result = tracker.findByName(second.getName());
+        List<Item> result = tracker.findByName(second.getName());
+        assertThat(result.get(1).getName()).isEqualTo(second.getName());
     }
 
     @Test
-    public void whenReplaceItemIsSuccessful() {
+    void whenReplaceItemIsSuccessful() {
         Tracker tracker = new Tracker();
         Item item = new Item("Bug");
         tracker.add(item);
@@ -75,7 +79,7 @@ public class TrackerTest {
     }
 
     @Test
-    public void whenReplaceItemIsNotSuccessful() {
+    void whenReplaceItemIsNotSuccessful() {
         Tracker tracker = new Tracker();
         Item item = new Item("Bug");
         tracker.add(item);
@@ -86,7 +90,7 @@ public class TrackerTest {
     }
 
     @Test
-    public void whenDeleteItemIsSuccessful() {
+    void whenDeleteItemIsSuccessful() {
         Tracker tracker = new Tracker();
         Item item = new Item("Bug");
         tracker.add(item);
@@ -96,7 +100,7 @@ public class TrackerTest {
     }
 
     @Test
-    public void whenDeleteItemIsNotSuccessful() {
+    void whenDeleteItemIsNotSuccessful() {
         Tracker tracker = new Tracker();
         Item item = new Item("Bug");
         tracker.add(item);

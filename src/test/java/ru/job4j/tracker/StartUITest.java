@@ -2,11 +2,13 @@ package ru.job4j.tracker;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class StartUITest {
+ class StartUITest {
     @Test
-    public void whenCreateItem() {
+     void whenCreateItem() {
         Output output = new ConsoleOutput();
         Input in = new StubInput(
                 new String[]{"0", "Item name", "1"}
@@ -16,12 +18,12 @@ public class StartUITest {
                 new CreateAction(output),
                 new ExitAction()
         };
-        new StartUI(output).init(in, tracker, actions);
-        assertThat(tracker.findAll()[0].getName()).isEqualTo("Item name");
+        new StartUI(output).init(in, tracker, List.of(actions));
+        assertThat(tracker.findAll().get(0).getName()).isEqualTo("Item name");
     }
 
     @Test
-    public void whenEdit() {
+     void whenEdit() {
         Output output = new ConsoleOutput();
         Input in = new StubInput(
                 new String[]{"0", "item name", "1", "1", "Edited", "2"}
@@ -30,12 +32,12 @@ public class StartUITest {
         UserAction[] actions = {
                 new CreateAction(output), new EditAction(output), new ExitAction()
         };
-        new StartUI(output).init(in, tracker, actions);
-        assertThat(tracker.findAll()[0].getName()).isEqualTo("Edited");
+        new StartUI(output).init(in, tracker, List.of(actions));
+        assertThat(tracker.findAll().get(0).getName()).isEqualTo("Edited");
     }
 
     @Test
-    public void whenDelete() {
+     void whenDelete() {
         Output output = new ConsoleOutput();
         Tracker tracker = new Tracker();
         Item item = tracker.add(new Item("Deleted item"));
@@ -47,12 +49,12 @@ public class StartUITest {
                 new DeleteAction(output),
                 new ExitAction()
         };
-        new StartUI(output).init(in, tracker, actions);
+        new StartUI(output).init(in, tracker, List.of(actions));
         assertThat(tracker.findById(item.getId())).isNull();
     }
 
     @Test
-    public void whenEditOutputIsSuccessfully() {
+     void whenEditOutputIsSuccessfully() {
         Output output = new StubOutput();
         Tracker tracker = new Tracker();
         Item one = tracker.add(new Item("test1"));
@@ -64,9 +66,9 @@ public class StartUITest {
                 new EditAction(output),
                 new ExitAction()
         };
-        new StartUI(output).init(in, tracker, actions);
+        new StartUI(output).init(in, tracker, List.of(actions));
         String ln = System.lineSeparator();
-        assertThat(output.toString()).isEqualTo(
+        assertThat(output.toString()).hasToString(
                 "Menu:" + ln
                         + "0. === Edit ===" + ln
                         + "1. === Exit program ===" + ln
@@ -79,7 +81,7 @@ public class StartUITest {
     }
 
     @Test
-    public void whenFindAllOutputIsSuccessfully() {
+     void whenFindAllOutputIsSuccessfully() {
         Output output = new StubOutput();
         Tracker tracker = new Tracker();
         Item one = tracker.add(new Item("test1"));
@@ -89,9 +91,9 @@ public class StartUITest {
                 new ShowAllAction(output),
                 new ExitAction()
         };
-        new StartUI(output).init(in, tracker, actions);
+        new StartUI(output).init(in, tracker, List.of(actions));
         String ln = System.lineSeparator();
-        assertThat(output.toString()).isEqualTo(
+        assertThat(output.toString()).hasToString(
                 "Menu:" + ln
                         + "0. === Show all ===" + ln
                         + "1. === Exit program ===" + ln
@@ -105,7 +107,7 @@ public class StartUITest {
     }
 
     @Test
-    public void whenInvalidExit() {
+    void whenInvalidExit() {
         Output out = new StubOutput();
         Input in = new StubInput(
                 new String[]{"6", "0"}
@@ -114,9 +116,9 @@ public class StartUITest {
         UserAction[] actions = new UserAction[]{
                 new ExitAction()
         };
-        new StartUI(out).init(in, tracker, actions);
+        new StartUI(out).init(in, tracker, List.of(actions));
         String ln = System.lineSeparator();
-        assertThat(out.toString()).isEqualTo(
+        assertThat(out.toString()).hasToString(
                 "Menu:" + ln
                         + "0. === Exit program ===" + ln
                         + "Wrong input, you can select: 0-0" + ln
