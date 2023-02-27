@@ -2,6 +2,7 @@ package ru.job4j.tracker;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -107,5 +108,45 @@ class TrackerTest {
         boolean result = tracker.delete(1000);
         assertThat(tracker.findById(item.getId()).getName()).isEqualTo("Bug");
         assertThat(result).isFalse();
+    }
+
+    @Test
+    void whenSortForwardByName() {
+        List<Item> items = new ArrayList<>();
+        Item first = new Item("Test");
+        Item second =  new Item("Ivan");
+        Item third = new Item("Dima");
+        Item fourth = new Item("Petr");
+        items.add(first);
+        items.add(second);
+        items.add(third);
+        items.add(fourth);
+        items.sort(new ItemAscByName());
+        List<Item> expected = new ArrayList<>();
+        expected.add(third);
+        expected.add(second);
+        expected.add(fourth);
+        expected.add(first);
+        assertThat(items).isEqualTo(expected);
+    }
+
+    @Test
+    void whenSortBackwardByName() {
+        List<Item> items = new ArrayList<>();
+        Item first = new Item("Test");
+        Item second =  new Item("Ivan");
+        Item third = new Item("Dima");
+        Item fourth = new Item("Petr");
+        items.add(first);
+        items.add(second);
+        items.add(third);
+        items.add(fourth);
+        items.sort(new ItemDescByName());
+        List<Item> expected = new ArrayList<>();
+        expected.add(first);
+        expected.add(fourth);
+        expected.add(second);
+        expected.add(third);
+        assertThat(items).isEqualTo(expected);
     }
 }
