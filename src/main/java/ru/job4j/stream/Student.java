@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Student {
     private final int score;
 
-    private final String surname;
+    private  String surname;
 
     public Student(int score, String surname) {
         this.score = score;
