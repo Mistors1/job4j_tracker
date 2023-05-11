@@ -2,6 +2,7 @@ package ru.job4j.tracker;
 
 import org.junit.jupiter.api.Test;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
         Input in = new StubInput(
                 new String[]{"0", "Item name", "1"}
         );
-        Tracker tracker = new Tracker();
+        Store tracker = new SqlTracker();
         UserAction[] actions = {
                 new CreateAction(output),
                 new ExitAction()
@@ -28,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
         Input in = new StubInput(
                 new String[]{"0", "item name", "1", "1", "Edited", "2"}
         );
-        Tracker tracker = new Tracker();
+        Store tracker = new SqlTracker();
         UserAction[] actions = {
                 new CreateAction(output), new EditAction(output), new ExitAction()
         };
@@ -37,9 +38,9 @@ import static org.assertj.core.api.Assertions.assertThat;
     }
 
     @Test
-     void whenDelete() {
+     void whenDelete() throws SQLException {
         Output output = new ConsoleOutput();
-        Tracker tracker = new Tracker();
+        Store tracker = new SqlTracker();
         Item item = tracker.add(new Item("Deleted item"));
         String id = String.valueOf(item.getId());
         Input in = new StubInput(
@@ -56,7 +57,7 @@ import static org.assertj.core.api.Assertions.assertThat;
     @Test
      void whenEditOutputIsSuccessfully() {
         Output output = new StubOutput();
-        Tracker tracker = new Tracker();
+        Store tracker = new SqlTracker();
         Item one = tracker.add(new Item("test1"));
         String replaceName = "New Test Name";
         Input in = new StubInput(
@@ -83,7 +84,7 @@ import static org.assertj.core.api.Assertions.assertThat;
     @Test
      void whenFindAllOutputIsSuccessfully() {
         Output output = new StubOutput();
-        Tracker tracker = new Tracker();
+        Store tracker = new SqlTracker();
         Item one = tracker.add(new Item("test1"));
         Item two = tracker.add(new Item("test2"));
         Input in = new StubInput(new String[]{"0", "1"});
@@ -112,7 +113,7 @@ import static org.assertj.core.api.Assertions.assertThat;
         Input in = new StubInput(
                 new String[]{"6", "0"}
         );
-        Tracker tracker = new Tracker();
+        Store tracker = new SqlTracker();
         UserAction[] actions = new UserAction[]{
                 new ExitAction()
         };
