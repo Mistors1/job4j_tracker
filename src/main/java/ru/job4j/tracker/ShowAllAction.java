@@ -14,7 +14,7 @@ public class ShowAllAction implements UserAction {
         return "=== Show all ===";
     }
 
-    public boolean execute(Input input, Tracker tracker) {
+    public boolean execute(Input input, Store tracker) {
         out.println("=== Show all applications ===");
         List<Item> items = tracker.findAll();
         if (!items.isEmpty()) {
